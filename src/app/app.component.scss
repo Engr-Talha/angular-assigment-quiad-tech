@@ -1,0 +1,29 @@
+.select {
+  margin: 10px;
+}
+
+.Flex {
+  display: flex;
+  gap: 20px;
+}
+
+.dropdown {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.Button {
+  padding: 10px;
+  background-color: greenyellow;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+  margin: 20px;
+}
+
+.select select {
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+}
