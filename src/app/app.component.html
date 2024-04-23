@@ -1,7 +1,10 @@
 <!-- dropdown.component.html -->
+<h5>Quaid Tech Test Assigment Play Ground</h5>
 <div class="dropdown">
 
+
   <div class="Flex select">
+    <strong>Designer</strong>
     Select Template :
     <div>
       <select class="" (change)="onTemplateSelected($event)">
@@ -10,10 +13,16 @@
     </div>
   </div>
 
+  <button (click)="genJson()" class="Button">Download Json FIle</button>
+  <button class="Button">Load Json FIle</button>
+
+
   <button class="Button" (click)="genPDF()">Download</button>
 
 
 
 </div>
+
+<hr>
 
 <div id="pdfme-container"></div>

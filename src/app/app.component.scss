@@ -5,25 +5,29 @@
 .Flex {
   display: flex;
   gap: 20px;
+  align-items: center;
 }
-
+h5 {
+  text-align: center;
+}
 .dropdown {
   display: flex;
-  gap: 20px;
+  gap: 2px;
   justify-content: space-between;
+  align-items: center;
 }
 
 .Button {
   padding: 10px;
-  background-color: greenyellow;
-  font-size: 20px;
-  border-radius: 10px;
+  background-color: #cacdc6;
+  font-size: 13px;
+  border-radius: 6px;
   border: none;
-  margin: 20px;
+  margin: 19px;
 }
 
 .select select {
-  padding: 10px;
-  font-size: 20px;
-  border-radius: 10px;
+  padding: 4px;
+  font-size: 13px;
+  border-radius: 4px;
 }

@@ -3,6 +3,7 @@ import { generate } from '@pdfme/generator';
 import { Form, Viewer, Designer } from '@pdfme/ui';
 import { invoiceTemplate } from './templates/invoiceTemplate';
 import { getCertificateTemplate } from './templates/getCertificateTemplate';
+import { tabletemplate } from './templates/tabletemplate';
 import {
   text,
   readOnlyText,
@@ -23,6 +24,7 @@ import {
   checkTemplate,
   getInputFromTemplate,
 } from '@pdfme/common';
+// import { Template } from '@pdfme/common/dist/types/src/schema';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +33,11 @@ import {
 })
 export class AppComponent implements OnInit {
   constructor(private elementRef: ElementRef) {}
-  templateOptions: string[] = ['Invoice Template', 'Certificate Template 2'];
+  templateOptions: string[] = [
+    'Invoice Template',
+    'Certificate Template',
+    'Table Template',
+  ];
   selectedTemplate: any;
   selectedOption: string | undefined;
   ngOnInit(): void {
@@ -42,7 +48,8 @@ export class AppComponent implements OnInit {
 
     const designer = new Designer({
       domContainer,
-      template: invoiceTemplate,
+      template: tabletemplate,
+      plugins: { Table: tableBeta },
     });
   }
 
@@ -62,8 +69,14 @@ export class AppComponent implements OnInit {
           // this.selectedTemplate = invoiceTemplate;
 
           break;
-        case 'Certificate Template 2':
+
+        case 'Certificate Template':
           selectedTemplate = getCertificateTemplate;
+          // this.selectedTemplate = getCertificateTemplate;
+          break;
+
+        case 'Table Template':
+          selectedTemplate = tabletemplate;
           // this.selectedTemplate = getCertificateTemplate;
 
           break;
@@ -75,6 +88,7 @@ export class AppComponent implements OnInit {
       const designer = new Designer({
         domContainer,
         template: selectedTemplate,
+        plugins: this.getPlugins(),
       });
     }
   }
@@ -104,6 +118,36 @@ export class AppComponent implements OnInit {
       } else {
         console.error('Failed to open new window for printing');
       }
+    });
+  }
+
+  genJson() {
+    const blob = new Blob([JSON.stringify(this.selectedTemplate)], {
+      type: 'application/json',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${'temlate'}.json`;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  getTemplateFromJsonFile(event: any): Promise<Template> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const jsonStr = event.target?.result as string;
+        const template2: Template = JSON.parse(jsonStr);
+        checkTemplate(template2);
+        resolve(template2);
+        this.selectedTemplate = template2;
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
     });
   }
 
